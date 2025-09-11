@@ -13,7 +13,16 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Plan:
+        // 1. Allocate an array of the requested length.
+        // 2. For each index i (0..length-1) set element to number * (i+1).
+        // 3. Return the populated array.
+        double[] result = new double[length];
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+        }
+        return result;
     }
 
     /// <summary>
