@@ -33,10 +33,36 @@ public static class Arrays
     /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
+{
+    // Step 1: Check if the list is empty or null
+    if (data == null || data.Count == 0)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        return; // Nothing to rotate
     }
+
+    // Step 2: Make sure the amount is within the list size
+    amount = amount % data.Count;
+
+    // Step 3: Create a new list to hold the rotated values
+    List<int> rotated = new List<int>();
+
+    // Step 4: Add the last 'amount' items to the new list
+    for (int i = data.Count - amount; i < data.Count; i++)
+    {
+        rotated.Add(data[i]);
+    }
+
+    // Step 5: Add the remaining items to the new list
+    for (int i = 0; i < data.Count - amount; i++)
+    {
+        rotated.Add(data[i]);
+    }
+
+    // Step 6: Copy the rotated values back into the original list
+    for (int i = 0; i < data.Count; i++)
+    {
+        data[i] = rotated[i];
+    }
+}
+
 }
