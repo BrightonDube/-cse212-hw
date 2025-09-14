@@ -93,7 +93,11 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found:
+    // The expected person was Bob, but Sue was returned.
+    // This suggests that people with zero turns (intended to represent infinite turns) are not being handled correctly.
+    // The queue may be skipping or misordering people with infinite turns.
+
     public void TestTakingTurnsQueue_ForeverZero()
     {
         var timTurns = 0;
