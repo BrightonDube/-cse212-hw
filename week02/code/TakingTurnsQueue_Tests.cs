@@ -128,7 +128,11 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found:
+    // The expected person was Tim, but Sue was returned.
+    // This implies that negative turn values (also meant to represent infinite turns) are not being processed correctly.
+    // The queue may be failing to treat negative turns as infinite.
+
     public void TestTakingTurnsQueue_ForeverNegative()
     {
         var timTurns = -3;
@@ -155,7 +159,10 @@ public class TakingTurnsQueueTests
     [TestMethod]
     // Scenario: Try to get the next person from an empty queue
     // Expected Result: Exception should be thrown with appropriate error message.
-    // Defect(s) Found: 
+    // Defect(s) Found:
+    // No defect found.
+    // The queue correctly throws an exception when attempting to retrieve a person from an empty queue.
+
     public void TestTakingTurnsQueue_Empty()
     {
         var players = new TakingTurnsQueue();
