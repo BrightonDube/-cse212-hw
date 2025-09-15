@@ -11,16 +11,16 @@ public class PriorityQueueTests
     // Defect(s) Found: 
     public void TestPriorityQueue_1()
     {
-    // Scenario: Enqueue several items with different priorities then dequeue them
-    // Expected Result: Items are returned in order of descending priority. If priorities tie, the earlier enqueued item is returned first.
-    var priorityQueue = new PriorityQueue();
-    priorityQueue.Enqueue("low", 1);
-    priorityQueue.Enqueue("med", 5);
-    priorityQueue.Enqueue("high", 10);
+        // Scenario: Enqueue several items with different priorities then dequeue them
+        // Expected Result: Items are returned in order of descending priority. If priorities tie, the earlier enqueued item is returned first.
+        var priorityQueue = new PriorityQueue();
+        priorityQueue.Enqueue("low", 1);
+        priorityQueue.Enqueue("med", 5);
+        priorityQueue.Enqueue("high", 10);
 
-    Assert.AreEqual("high", priorityQueue.Dequeue());
-    Assert.AreEqual("med", priorityQueue.Dequeue());
-    Assert.AreEqual("low", priorityQueue.Dequeue());
+        Assert.AreEqual("high", priorityQueue.Dequeue());
+        Assert.AreEqual("med", priorityQueue.Dequeue());
+        Assert.AreEqual("low", priorityQueue.Dequeue());
     }
 
     [TestMethod]
