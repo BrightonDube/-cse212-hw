@@ -21,11 +21,17 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // Build a set for O(1) lookups
-        var set = new HashSet<string>(words);
+        // Build a set for O(1) lookups (pre-size and use ordinal comparer for performance)
+        var set = new HashSet<string>(words.Length, StringComparer.Ordinal);
+        foreach (var w in words)
+        {
+            set.Add(w);
+        }
+
         var results = new List<string>();
 
-        foreach (var w in words)
+        // Iterate unique words only
+        foreach (var w in set)
         {
             // same-letter words do not pair
             if (w.Length == 2 && w[0] == w[1])
@@ -109,52 +115,37 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // Use a frequency dictionary, ignoring spaces and case
-        var counts = new Dictionary<char, long>();
+        // High-performance frequency count using fixed-size array.
+        // Ignore spaces and letter case (ASCII case folding only for speed).
+        var counts = new int[65536];
+        int nonZeroBuckets = 0;
 
-        foreach (var c in word1)
+        var s1 = word1.AsSpan();
+        for (int i = 0; i < s1.Length; i++)
         {
-            if (c == ' ')
-            {
-                continue;
-            }
-
-            var ch = char.ToUpperInvariant(c);
-            if (counts.TryGetValue(ch, out var current))
-            {
-                counts[ch] = current + 1;
-            }
-            else
-            {
-                counts[ch] = 1;
-            }
+            char c = s1[i];
+            if (c == ' ') continue;
+            if (c >= 'a' && c <= 'z') c = (char)(c - 32); // to upper ASCII
+            int idx = c;
+            int prev = counts[idx];
+            counts[idx] = prev + 1;
+            if (prev == 0) nonZeroBuckets++;
         }
 
-        foreach (var c in word2)
+        var s2 = word2.AsSpan();
+        for (int i = 0; i < s2.Length; i++)
         {
-            if (c == ' ')
-            {
-                continue;
-            }
-
-            var ch = char.ToUpperInvariant(c);
-            if (!counts.TryGetValue(ch, out var current))
-            {
-                return false;
-            }
-
-            current -= 1;
-            if (current == 0)
-            {
-                counts.Remove(ch);
-            }
-            else
-            {
-                counts[ch] = current;
-            }
+            char c = s2[i];
+            if (c == ' ') continue;
+            if (c >= 'a' && c <= 'z') c = (char)(c - 32); // to upper ASCII
+            int idx = c;
+            int prev = counts[idx];
+            if (prev == 0) return false;
+            counts[idx] = prev - 1;
+            if (prev == 1) nonZeroBuckets--;
         }
 
-        return counts.Count == 0;
+        return nonZeroBuckets == 0;
     }
 
     /// <summary>

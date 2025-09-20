@@ -77,13 +77,14 @@ public class Maze
             throw new InvalidOperationException("Can't go that way!");
         }
 
-        var target = (_currX, _currY + 1);
+        // Coordinate system in tests: moving Up means y-1
+        var target = (_currX, _currY - 1);
         if (!_mazeMap.ContainsKey(target))
         {
             throw new InvalidOperationException("Can't go that way!");
         }
 
-        _currY += 1;
+        _currY -= 1;
     }
 
     /// <summary>
@@ -97,13 +98,14 @@ public class Maze
             throw new InvalidOperationException("Can't go that way!");
         }
 
-        var target = (_currX, _currY - 1);
+        // Coordinate system in tests: moving Down means y+1
+        var target = (_currX, _currY + 1);
         if (!_mazeMap.ContainsKey(target))
         {
             throw new InvalidOperationException("Can't go that way!");
         }
 
-        _currY -= 1;
+        _currY += 1;
     }
 
     public string GetStatus()
