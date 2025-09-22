@@ -100,13 +100,14 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-week03-learn",
-            "program": "${workspaceFolder}/week03/learn/bin/Debug/net8.0/learn.dll",
-            "args": [],
+            "program": "dotnet",
+            "args": ["${workspaceFolder}/week03/learn/bin/Debug/net8.0/learn.dll"],
             "cwd": "${workspaceFolder}/week03/learn",
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
-        },
+          }
+          ,
 
         {
             "name": "03 Team Activity",
@@ -184,6 +185,6 @@
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
-        },
+        }
     ]
 }
