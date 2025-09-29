@@ -43,17 +43,19 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
-        if (size == 0)
+        // Base case: if the word has reached the target size, add it to results
+        if (word.Length == size)
         {
             results.Add(word);
             return;
         }
 
+        // Recursive case: try each letter, removing it from the pool for the next call
         for (int i = 0; i < letters.Length; i++)
         {
             char c = letters[i];
-            string remaining = (i > 0 ? letters[..i] : "") + (i + 1 < letters.Length ? letters[(i + 1)..] : "");
-            PermutationsChoose(results, remaining, size - 1, word + c);
+            string remaining = letters.Remove(i, 1); // remove the chosen character
+            PermutationsChoose(results, remaining, size, word + c);
         }
     }
 
@@ -147,8 +149,21 @@ public static class Recursion
             return;
         }
 
-        string prefix = starIndex > 0 ? pattern[..starIndex] : "";
-        string suffix = starIndex + 1 < pattern.Length ? pattern[(starIndex + 1)..] : "";
+        string prefix = "";
+        string suffix = "";
+
+        // Everything before the '*'
+        if (starIndex > 0)
+        {
+            prefix = pattern.Substring(0, starIndex);
+        }
+
+        // Everything after the '*'
+        if (starIndex + 1 < pattern.Length)
+        {
+            suffix = pattern.Substring(starIndex + 1);
+        }
+
 
         WildcardBinary(prefix + '0' + suffix, results);
         WildcardBinary(prefix + '1' + suffix, results);
